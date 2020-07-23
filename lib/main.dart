@@ -188,33 +188,93 @@ class _CreateTaskPageState extends State<CreateTaskPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false, //new line
       backgroundColor: Color(0XFF6747ce),
-      body: Container(
-        alignment: Alignment.center,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            RaisedButton(
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(26.0),
-              ),
-              padding: EdgeInsets.all(16.0),
-              color: Colors.white,
-              child: Text(
-                'Back to all tasks',
-                style: TextStyle(
-                  fontSize: 16,
-                  letterSpacing: 2,
+      body: SafeArea(
+        child: Container(
+          alignment: Alignment.center,
+          child: Padding(
+            padding: EdgeInsets.all(24.0),
+            child: Column(
+              children: <Widget>[
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: <Widget>[
+                    Ink(
+                      width: 36.0,
+                      height: 36.0,
+                      decoration: const ShapeDecoration(
+                        color: Color(0XFF7e60db),
+                        shape: CircleBorder(),
+                      ),
+                      child: IconButton(
+                        iconSize: 18.0,
+                        icon: Icon(Icons.arrow_back),
+                        color: Colors.white,
+                        onPressed: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => MainPage()));
+                        },
+                      ),
+                    ),
+                    Text(
+                      'create task',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 20.0,
+                      ),
+                    ),
+                    Ink(
+                      width: 36.0,
+                      height: 36.0,
+                      decoration: const ShapeDecoration(
+                        color: Color(0XFF7e60db),
+                        shape: CircleBorder(),
+                      ),
+                      child: IconButton(
+                        iconSize: 18.0,
+                        icon: Icon(Icons.done),
+                        color: Colors.white,
+                        onPressed: () {
+                          //tutaj zatwierdzenie dodania tasku
+                        },
+                      ),
+                    ),
+                  ],
                 ),
-              ),
-              onPressed: () {
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => TaskPage()));
-              },
-            )
-          ],
+                testForm(),
+              ],
+            ),
+          ),
         ),
       ),
+    );
+  }
+
+  Widget testForm() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: <Widget>[
+        TextField(
+          style: TextStyle(color: Colors.white),
+          autofocus: true,
+          maxLength: 50,
+          decoration: InputDecoration(
+            labelText: "todo task",
+            fillColor: Colors.white,
+            labelStyle: new TextStyle(
+              color: Colors.white,
+            ),
+            border: UnderlineInputBorder(
+              borderSide: BorderSide(
+                color: Colors.white,
+              ),
+            ),
+          ),
+        ),
+      ],
     );
   }
 }
