@@ -196,6 +196,7 @@ class _CreateTaskPageState extends State<CreateTaskPage> {
           child: Padding(
             padding: EdgeInsets.all(24.0),
             child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: <Widget>[
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -244,7 +245,12 @@ class _CreateTaskPageState extends State<CreateTaskPage> {
                     ),
                   ],
                 ),
-                testForm(),
+                Expanded(
+                  child: Align(
+                    alignment: Alignment.center,
+                    child: testForm(),
+                  ),
+                ),
               ],
             ),
           ),
@@ -254,27 +260,22 @@ class _CreateTaskPageState extends State<CreateTaskPage> {
   }
 
   Widget testForm() {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: <Widget>[
-        TextField(
-          style: TextStyle(color: Colors.white),
-          autofocus: true,
-          maxLength: 50,
-          decoration: InputDecoration(
-            labelText: "todo task",
-            fillColor: Colors.white,
-            labelStyle: new TextStyle(
-              color: Colors.white,
-            ),
-            border: UnderlineInputBorder(
-              borderSide: BorderSide(
-                color: Colors.white,
-              ),
-            ),
+    return TextField(
+      style: TextStyle(color: Colors.white),
+      autofocus: true,
+      maxLength: 50,
+      decoration: InputDecoration(
+        labelText: "todo task",
+        fillColor: Colors.white,
+        labelStyle: new TextStyle(
+          color: Colors.white,
+        ),
+        border: UnderlineInputBorder(
+          borderSide: BorderSide(
+            color: Colors.white,
           ),
         ),
-      ],
+      ),
     );
   }
 }
