@@ -43,30 +43,33 @@ class MainPage extends StatelessWidget {
               height: 10,
             ),
             Text(
-              'Todo App',
+              'todo app',
               style: TextStyle(
                 color: Colors.white,
                 fontSize: 32,
                 letterSpacing: 4,
               ),
             ),
-            RaisedButton(
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(26.0),
-              ),
-              padding: EdgeInsets.all(16.0),
-              color: Colors.white,
-              child: Text(
-                'Display tasks',
-                style: TextStyle(
-                  fontSize: 16,
-                  letterSpacing: 2,
+            Padding(
+              padding: const EdgeInsets.all(20.0),
+              child: RaisedButton(
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(26.0),
                 ),
+                padding: EdgeInsets.all(14.0),
+                color: Colors.white,
+                child: Text(
+                  'DISPLAY TASKS',
+                  style: TextStyle(
+                    fontSize: 14,
+                    letterSpacing: 2,
+                  ),
+                ),
+                onPressed: () {
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => TaskPage()));
+                },
               ),
-              onPressed: () {
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => TaskPage()));
-              },
             )
           ],
         ),
@@ -146,12 +149,17 @@ class TaskPage extends StatelessWidget {
                       ),
                       padding: EdgeInsets.all(16.0),
                       color: Colors.white,
-                      child: Text(
-                        'Create task',
-                        style: TextStyle(
-                          fontSize: 16,
-                          letterSpacing: 2,
-                        ),
+                      child: Row(
+                        children: <Widget>[
+                          Icon(Icons.add),
+                          Text(
+                            'Create task',
+                            style: TextStyle(
+                              fontSize: 16,
+                              letterSpacing: 2,
+                            ),
+                          ),
+                        ],
                       ),
                       onPressed: () {
                         Navigator.push(
