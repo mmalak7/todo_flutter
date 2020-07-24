@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:todoSimple/createTask.dart';
+import 'package:todoSimple/task.dart';
 
 void main() {
   runApp(MainApp());
 }
+
+TaskUtils taskUtils = new TaskUtils();
 
 class MainApp extends StatelessWidget {
   @override
@@ -185,6 +189,8 @@ class CreateTaskPage extends StatefulWidget {
 }
 
 class _CreateTaskPageState extends State<CreateTaskPage> {
+  final textFieldController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -216,7 +222,7 @@ class _CreateTaskPageState extends State<CreateTaskPage> {
                           Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => MainPage()));
+                                  builder: (context) => TaskPage()));
                         },
                       ),
                     ),
@@ -239,7 +245,16 @@ class _CreateTaskPageState extends State<CreateTaskPage> {
                         icon: Icon(Icons.done),
                         color: Colors.white,
                         onPressed: () {
-                          //tutaj zatwierdzenie dodania tasku
+                          print(taskUtils.getTaskListLength());
+                          Task newTask = new Task(
+                              taskUtils.getTaskListLength() + 1,
+                              textFieldController.text);
+                          taskUtils.addNewTask(newTask);
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => TaskPage()));
+                          print(taskUtils.getTaskListLength());
                         },
                       ),
                     ),
@@ -261,7 +276,9 @@ class _CreateTaskPageState extends State<CreateTaskPage> {
 
   Widget testForm() {
     return TextField(
-      style: TextStyle(color: Colors.white),
+      style: TextStyle(
+        color: Colors.white,
+      ),
       autofocus: true,
       maxLength: 50,
       decoration: InputDecoration(
