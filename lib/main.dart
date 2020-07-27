@@ -29,6 +29,7 @@ class MainPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false, //new line
       backgroundColor: Color(0XFF6747ce),
       body: Container(
         alignment: Alignment.center,
@@ -221,8 +222,24 @@ class _CreateTaskPageState extends State<CreateTaskPage> {
   Widget customForm() {
     return TextField(
       decoration: InputDecoration(
-        border: InputBorder.none,
-        hintText: 'add task',
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(20.0),
+          borderSide: BorderSide(
+            color: Colors.white,
+          ),
+        ),
+        focusedBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(20.0),
+          borderSide: BorderSide(
+            color: Colors.white,
+          ),
+        ),
+        hintText: 'add task here..',
+        hintStyle: TextStyle(color: Colors.white),
+        fillColor: Colors.white,
+      ),
+      style: TextStyle(
+        color: Colors.white,
       ),
       controller: textFieldController,
     );
