@@ -1,12 +1,20 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
-import 'package:todoSimple/createTask.dart';
+import 'package:provider/provider.dart';
+import 'package:todoSimple/TaskModel.dart';
 import 'package:todoSimple/task.dart';
 
 void main() {
-  runApp(MainApp());
+  runApp(
+    ChangeNotifierProvider(
+      create: (context) => TaskModel(),
+      child: MainApp(),
+    ),
+  );
 }
 
-TaskUtils taskUtils = new TaskUtils();
+TaskModel taskModel = new TaskModel();
 
 class MainApp extends StatelessWidget {
   @override
@@ -82,10 +90,16 @@ class MainPage extends StatelessWidget {
   }
 }
 
-class TaskPage extends StatelessWidget {
+class TaskPage extends StatefulWidget {
+  @override
+  _TaskPageState createState() => _TaskPageState();
+}
+
+class _TaskPageState extends State<TaskPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false, //new line
       backgroundColor: Color(0XFF6747ce),
       body: SafeArea(
         child: Container(
@@ -144,6 +158,18 @@ class TaskPage extends StatelessWidget {
                     ),
                   ],
                 ),
+                Expanded(
+                  child: ListView.builder(
+                    itemCount: taskModel.getTotalList(),
+                    itemBuilder: (context, index) {
+                      return ListTile(
+                        title: Text(
+                          taskModel.getTask(index),
+                        ),
+                      );
+                    },
+                  ),
+                ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
@@ -166,6 +192,7 @@ class TaskPage extends StatelessWidget {
                         ],
                       ),
                       onPressed: () {
+                        //tutaj idzie logika do tworzeniai nowego tasku !
                         Navigator.push(
                             context,
                             MaterialPageRoute(
@@ -190,6 +217,16 @@ class CreateTaskPage extends StatefulWidget {
 
 class _CreateTaskPageState extends State<CreateTaskPage> {
   final textFieldController = TextEditingController();
+
+  Widget customForm() {
+    return TextField(
+      decoration: InputDecoration(
+        border: InputBorder.none,
+        hintText: 'add task',
+      ),
+      controller: textFieldController,
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -245,16 +282,14 @@ class _CreateTaskPageState extends State<CreateTaskPage> {
                         icon: Icon(Icons.done),
                         color: Colors.white,
                         onPressed: () {
-                          print(taskUtils.getTaskListLength());
-                          Task newTask = new Task(
-                              taskUtils.getTaskListLength() + 1,
-                              textFieldController.text);
-                          taskUtils.addNewTask(newTask);
+                          int test = taskModel.getTotalList() + 1;
+                          Task task = new Task(test, textFieldController.text);
+                          taskModel.addTask(task);
+                          print(textFieldController.text);
                           Navigator.push(
                               context,
                               MaterialPageRoute(
                                   builder: (context) => TaskPage()));
-                          print(taskUtils.getTaskListLength());
                         },
                       ),
                     ),
@@ -263,33 +298,11 @@ class _CreateTaskPageState extends State<CreateTaskPage> {
                 Expanded(
                   child: Align(
                     alignment: Alignment.center,
-                    child: testForm(),
+                    child: customForm(),
                   ),
                 ),
               ],
             ),
-          ),
-        ),
-      ),
-    );
-  }
-
-  Widget testForm() {
-    return TextField(
-      style: TextStyle(
-        color: Colors.white,
-      ),
-      autofocus: true,
-      maxLength: 50,
-      decoration: InputDecoration(
-        labelText: "todo task",
-        fillColor: Colors.white,
-        labelStyle: new TextStyle(
-          color: Colors.white,
-        ),
-        border: UnderlineInputBorder(
-          borderSide: BorderSide(
-            color: Colors.white,
           ),
         ),
       ),
